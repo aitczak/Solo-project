@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
-const Bookshelf = ({
-  covers,
-  totalBooks,
-  newISBN,
-  handleInputChange,
-  handleSubmit,
-}) => {
+const Bookshelf = ({ covers, newISBN, handleInputChange, handleSubmit }) => {
   const books = covers.map((isbn) => {
     return (
-      <img
-        key={isbn}
-        src={`https://covers.openlibrary.org/b/isbn/${isbn}-M.jpg`}
-      ></img>
+      <a href={`https://isbnsearch.org/isbn/${isbn}`}>
+        <img
+          className='book'
+          key={isbn}
+          src={`https://covers.openlibrary.org/b/isbn/${isbn}-M.jpg`}
+        ></img>
+      </a>
     );
   });
 

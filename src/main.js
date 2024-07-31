@@ -3,13 +3,65 @@ import Top from './components/topContainer';
 import Bottom from './components/bottomContainer';
 
 const Main = (props) => {
+  const [totalPages, setTotalPages] = useState(0);
+  const [newPages, setNewPages] = useState('');
+  const [bookTitleEntry, setBookTitleEntry] = useState('');
+  const [dateEntry, setDateEntry] = useState('');
+  const [studentName, setStudentName] = useState('');
+  const [entries, setEntries] = useState([]);
+
+  const handleLogInputChange = (e) => {
+    setNewPages(e.target.value);
+  };
+  const handleBookInputChange = (e) => {
+    setBookTitleEntry(e.target.value);
+  };
+  const handleDateInputChange = (e) => {
+    setDateEntry(e.target.value);
+  };
+  const handleNameInputchange = (e) => {
+    setStudentName(e.target.value);
+  };
+  function handleLogSubmit(e) {
+    e.preventDefault();
+    if (newPages) {
+      const updatedPages = parseInt(totalPages) + parseInt(newPages);
+      setTotalPages(updatedPages);
+      setEntries([
+        ...entries,
+        {
+          name: studentName,
+          pages: newPages,
+          book: bookTitleEntry,
+          date: dateEntry,
+        },
+      ]);
+      setNewPages(''); // Clear the input after submission
+      setBookTitleEntry('');
+      setDateEntry('');
+      setStudentName('');
+    }
+  }
+
   // put render logic here
   return (
     <div>
       <div id='main-container'>
         <div id='main'>
-          <Top />
-          <Bottom />
+          <Top totalPages={totalPages} />
+          <Bottom
+            newPages={newPages}
+            totalPages={totalPages}
+            bookTitleEntry={bookTitleEntry}
+            dateEntry={dateEntry}
+            studentName={studentName}
+            entries={entries}
+            handleLogSubmit={handleLogSubmit}
+            handleLogInputChange={handleLogInputChange}
+            handleBookInputChange={handleBookInputChange}
+            handleDateInputChange={handleDateInputChange}
+            handleNameInputChange={handleNameInputchange}
+          />
         </div>
       </div>
     </div>

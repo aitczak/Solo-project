@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Totals from './totalsDisplay';
 import Bookshelf from './bookshelfDisplay';
 
-const Top = (props) => {
+const Top = ({ totalPages }) => {
   const [totalBooks, setTotalBooks] = useState(4);
   const [covers, setCovers] = useState([
     9780399208539, 9780060256678, 9781852275501,
@@ -29,7 +29,7 @@ const Top = (props) => {
     <div>
       <div id='top-container'>
         <h1 id='header'>Welcome to Our Reading Journey</h1>
-        <Totals totalBooks={totalBooks} />
+        <Totals totalBooks={totalBooks} totalPages={totalPages} />
         <Bookshelf
           totalBooks={totalBooks}
           covers={covers}
