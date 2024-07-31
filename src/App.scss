@@ -1,0 +1,46 @@
+h1 {
+  color: red;
+}
+
+#top-container {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#bottom-container {
+  border: 1px solid black;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+#bookshelf {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#bookshelfBar {
+  width: 800px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.barLeft {
+  width: 50%;
+}
+.barRight {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  width: 50%;
+}
+#books {
+  border: 1px solid black;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
