@@ -10,6 +10,14 @@ const Main = (props) => {
   const [studentName, setStudentName] = useState('');
   const [entries, setEntries] = useState([]);
 
+  useEffect(() => {
+    fetch('http://localhost:3001/getAll')
+      .then((response) => response.json())
+      .then((data) => {
+        setEntries([...entries, ...data]);
+      });
+  }, []);
+
   const handleLogInputChange = (e) => {
     setNewPages(e.target.value);
   };
@@ -27,6 +35,18 @@ const Main = (props) => {
     if (newPages) {
       const updatedPages = parseInt(totalPages) + parseInt(newPages);
       setTotalPages(updatedPages);
+      const newEntry = {
+        name: studentName,
+        pages: newPages,
+        book: bookTitleEntry,
+        date: dateEntry,
+      };
+      fetch('http://localhost:3001/newEntry', {
+        method: 'POST',
+        body: JSON.stringify(newEntry),
+        headers: { 'Content-Type': 'application/json' },
+      });
+
       setEntries([
         ...entries,
         {

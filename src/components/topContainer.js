@@ -4,10 +4,18 @@ import Bookshelf from './bookshelfDisplay';
 
 const Top = ({ totalPages }) => {
   const [totalBooks, setTotalBooks] = useState(4);
-  const [covers, setCovers] = useState([
-    9780399208539, 9780060256678, 9781852275501,
-  ]);
+  const [covers, setCovers] = useState([]);
   const [newISBN, setNewISBN] = useState('');
+
+  useEffect(() => {
+    fetch('http://localhost:3001/getCovers')
+      // .then((response) => response.json())
+      .then((data) => {
+        console.log('data in fetch for all covers', data);
+        const newCovers = covers.concat([data]);
+        setCovers(newCovers);
+      });
+  }, []);
 
   const handleInputChange = (e) => {
     setNewISBN(e.target.value);
@@ -16,6 +24,14 @@ const Top = ({ totalPages }) => {
   function handleSubmit(e) {
     e.preventDefault();
     if (newISBN) {
+      const newCoverDoc = {
+        ISBN: parseInt(newISBN),
+      };
+      fetch('http://localhost:3001/newCover', {
+        method: 'POST',
+        body: JSON.stringify(newCoverDoc),
+        headers: { 'Content-Type': 'application/json' },
+      });
       const updatedCovers = [...covers, newISBN];
       setCovers(updatedCovers);
       setNewISBN(''); // Clear the input after submission
