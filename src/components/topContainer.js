@@ -2,44 +2,17 @@ import React, { useEffect, useState } from 'react';
 import Totals from './totalsDisplay';
 import Bookshelf from './bookshelfDisplay';
 
-const Top = ({ totalPages }) => {
-  const [totalBooks, setTotalBooks] = useState(4);
-  const [covers, setCovers] = useState([]);
-  const [newISBN, setNewISBN] = useState('');
-
-  useEffect(() => {
-    fetch('http://localhost:3001/getCovers')
-      // .then((response) => response.json())
-      .then((data) => {
-        console.log('data in fetch for all covers', data);
-        const newCovers = covers.concat([data]);
-        setCovers(newCovers);
-      });
-  }, []);
-
-  const handleInputChange = (e) => {
-    setNewISBN(e.target.value);
-  };
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (newISBN) {
-      const newCoverDoc = {
-        ISBN: parseInt(newISBN),
-      };
-      fetch('http://localhost:3001/newCover', {
-        method: 'POST',
-        body: JSON.stringify(newCoverDoc),
-        headers: { 'Content-Type': 'application/json' },
-      });
-      const updatedCovers = [...covers, newISBN];
-      setCovers(updatedCovers);
-      setNewISBN(''); // Clear the input after submission
-      const newTotal = totalBooks + 1;
-      setTotalBooks(newTotal);
-    }
-  }
-
+const Top = ({
+  totalPages,
+  totalBooks,
+  covers,
+  newISBN,
+  handleInputChange,
+  handleSubmit,
+  handleDeleteInputChange,
+  handleDeleteSubmit,
+  deleteISBN,
+}) => {
   // put render logic here
   return (
     <div>
@@ -52,6 +25,9 @@ const Top = ({ totalPages }) => {
           newISBN={newISBN}
           handleInputChange={handleInputChange}
           handleSubmit={handleSubmit}
+          handleDeleteInputChange={handleDeleteInputChange}
+          handleDeleteSubmit={handleDeleteSubmit}
+          deleteISBN={deleteISBN}
         />
       </div>
     </div>

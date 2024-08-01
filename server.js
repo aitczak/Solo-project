@@ -7,6 +7,7 @@ const cors = require('cors');
 const PORT = 3001;
 const logController = require('./controllers/logController');
 const coverController = require('./controllers/coverController');
+const pagesController = require('./controllers/pagesController');
 
 //ADD CONTROLLERS HERE
 app.use(cors());
@@ -49,6 +50,28 @@ app.get('/getCovers', coverController.getAllCovers, (req, res) => {
   console.log('res.locals.covers within router :', res.locals.allCovers);
   return res.status(200).send(res.locals.allCovers);
 });
+
+app.delete('/deleteCover', coverController.deleteCover, (req, res) => {
+  console.log('logging from within delete router');
+  return res.status(200).send();
+});
+app.put(
+  '/updatePages',
+  (req, res, next) => {
+    console.log('Received request to update pages with body:', req.body);
+    next();
+  },
+  pagesController.updatePages,
+  (req, res) => {
+    console.log('logging from within updatePages router');
+    if (res.locals.newTotalPages) {
+      return res.status(200).json(res.locals.newTotalPages);
+    } else {
+      return res.status(404).json({ message: 'Page update failed' });
+    }
+  }
+);
+
 // Middleware for error handling
 app.use((err, req, res, next) => {
   const defaultErr = {

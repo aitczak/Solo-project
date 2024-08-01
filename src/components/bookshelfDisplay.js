@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
-const Bookshelf = ({ covers, newISBN, handleInputChange, handleSubmit }) => {
+const Bookshelf = ({
+  covers,
+  newISBN,
+  handleInputChange,
+  handleSubmit,
+  handleDeleteInputChange,
+  handleDeleteSubmit,
+  deleteISBN,
+}) => {
   const books = covers.map((isbn) => {
     return (
       <a href={`https://isbnsearch.org/isbn/${isbn}`}>
@@ -33,6 +41,17 @@ const Bookshelf = ({ covers, newISBN, handleInputChange, handleSubmit }) => {
           </div>
         </div>
         <div id='books'>{books}</div>
+        <form id='belowBookshelf' onSubmit={handleDeleteSubmit}>
+          <p>To remove a book from the shelf, type the ISBN here:</p>
+          <input
+            className='deleteISBN'
+            type='text'
+            placeholder='ISBN to delete'
+            value={deleteISBN}
+            onChange={handleDeleteInputChange}
+          />
+          <button type='submit'>Submit</button>
+        </form>
       </div>
     </div>
   );
